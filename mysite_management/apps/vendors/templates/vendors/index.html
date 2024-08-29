@@ -10,8 +10,9 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-right">
+                        <li class="breadcrumb-item"><a href="{% url 'vendor.rough' %}">Rough Work</a></li>
                         <li class="breadcrumb-item"><a href="javascript:void(0);">Stexo</a></li>
-                        <li class="breadcrumb-item"><a href="{% url 'staff.users' %}">{{singular_name}}</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'vendor.index' %}">{{singular_name}}</a></li>
                         <li class="breadcrumb-item active">All {{plural_name}}</li>
                     </ol>
                 </div>
@@ -22,7 +23,7 @@
             <div class="col-xl-12">
                 <div class="card m-b-30">
                     <div class="card-body">
-                        <a href="{% url 'staff.add' %}">
+                        <a href="{% url 'vendor.add' %}">
                             <h4 class="btn btn-primary mt-0 header-title mb-4">Add {{singular_name}}</h4>
                         </a>
                         <div class="table-responsive">

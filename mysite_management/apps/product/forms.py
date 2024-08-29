@@ -1,15 +1,15 @@
 from django import forms
-from apps.product.models import Product, VendorProfile, ProductCategory
+from apps.product.models import Product,ProductCategory
 
 class ProductForm(forms.ModelForm):
     
-    vendor = forms.ModelChoiceField(
-        queryset=VendorProfile.objects.all(),
-        required=False,
-        widget=forms.CheckboxSelectMultiple(
-            attrs={'class': "form-control",}
-        )
-    )
+    # vendor = forms.ModelChoiceField(
+    #     queryset=VendorProfile.objects.all(),
+    #     required=False,
+    #     widget=forms.CheckboxSelectMultiple(
+    #         attrs={'class': "form-control",}
+    #     )
+    # )
     
     categories = forms.ModelChoiceField(
         queryset=ProductCategory.objects.all(),
@@ -64,4 +64,4 @@ class ProductForm(forms.ModelForm):
     
     class Meta:
         model = Product
-        fields = ['vendor', 'categories', 'name', 'description', 'price', 'quantity']
+        fields = ['categories', 'name', 'description', 'price', 'quantity']

@@ -43,8 +43,9 @@ class MyUserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     """
     Admin role_id = 1
-    User role_id = 2
-    Staff role id = 3
+    Staff role_id = 2
+    Vendors role_id = 3
+    Clients role_id = 4
     """
     user_role_id = models.IntegerField(db_index=True, default=0, blank=True, null=True)
     first_name = models.CharField(max_length=128, blank=True, null=True)

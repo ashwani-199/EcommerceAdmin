@@ -1,5 +1,4 @@
 from django.db import models
-from apps.vendor.models import VendorProfile
 from apps.users.models import User
 # Create your models here.
 
@@ -13,7 +12,6 @@ class ProductCategory(models.Model):
         return self.name
 
 class Product(models.Model):
-    vendor = models.ForeignKey(VendorProfile, on_delete=models.CASCADE)
     categories = models.ManyToManyField(ProductCategory)
     name = models.CharField(max_length=255)
     description = models.TextField()

@@ -6,14 +6,13 @@
         <div class="page-title-box">
             <div class="row align-items-center">
                 <div class="col-sm-6">
-                    <h4 class="page-title">Edit {{singular_name}}</h4>
+                    <h4 class="page-title">Add {{singular_name}}</h4>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-right">
                         <li class="breadcrumb-item"><a href="javascript:void(0);">Stexo</a></li>
-                        <li class="breadcrumb-item"><a href="{% url 'staff.users' %}">{{singular_name}} Managements</a>
-                        </li>
-                        <li class="breadcrumb-item active">Edit {{singular_name}}</li>
+                        <li class="breadcrumb-item"><a href="{% url 'vendor.index' %}">{{singular_name}}</a></li>
+                        <li class="breadcrumb-item active">Add {{singular_name}}</li>
                     </ol>
                 </div>
             </div> <!-- end row -->
@@ -24,7 +23,7 @@
             <div class="col-lg-10">
                 <div class="card m-b-30">
                     <div class="card-body">
-                        <form action="{% url 'staff.edit' user_data.id %}" method="post">
+                        <form action="{% url 'vendor.add' %}" method="post">
                             {% csrf_token %}
                             {% for field in form %}
                             {% if field.name == 'username' %}
@@ -67,6 +66,26 @@
                                     </div>
                                 </div>
                             </div>
+                            {% elif field.name == 'password' %}
+                            <div class="form-group">
+                                <div class="col-12">
+                                    <label>{{field.label}}</label>
+                                    {{field}}
+                                    <div class="invalid-feedback">
+                                        {{field.errors}}
+                                    </div>
+                                </div>
+                            </div>
+                            {% elif field.name == 'confirm_password' %}
+                            <div class="form-group">
+                                <div class="col-12">
+                                    <label>{{field.label}}</label>
+                                    {{field}}
+                                    <div class="invalid-feedback">
+                                        {{field.errors}}
+                                    </div>
+                                </div>
+                            </div>
                             {% elif field.name == 'mobile_number' %}
                             <div class="form-group">
                                 <div class="col-12">
@@ -97,6 +116,8 @@
             </div> <!-- end col -->
             <!-- end col -->
         </div>
+
+
     </div>
     <!-- container-fluid -->
 

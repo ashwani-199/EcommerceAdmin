@@ -5,7 +5,10 @@ from django.core.paginator import Paginator
 from apps.users.models import User
 from .forms import UserAddForm, UserForm
 from django.contrib import messages
-# Create your views here.
+
+
+SINGULAR_NAME = "Staff"
+PLURAL_NAME = "Staffs"
 
 @login_required(login_url='login')
 def index(request):
@@ -19,6 +22,8 @@ def index(request):
         'page_obj':page_obj,
         'totalRecord': totalRecord,
         'users_obj': DB,
+        'singular_name': SINGULAR_NAME,
+        'plural_name': PLURAL_NAME,
     }
     return render(request, 'users/index.html', context)
 
@@ -45,6 +50,8 @@ def add(request):
         form = UserAddForm()
     context = {
         "form": form,
+        'singular_name': SINGULAR_NAME,
+        'plural_name': PLURAL_NAME,
     }
     return render(request, 'users/add.html', context)
 
@@ -66,11 +73,13 @@ def edit(request, id):
         if form.is_valid():
             form.save()
             messages.success(request, "you are now logged in")
-            return redirect('users')
+            return redirect('staff.users')
 
     context = {
         'form': form,
         'user_data': user,
+        'singular_name': SINGULAR_NAME,
+        'plural_name': PLURAL_NAME,
     }
     return render(request, 'users/edit.html', context)
 

@@ -19,6 +19,8 @@
     <link href="{% static 'assets/css/icons.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css">
 
+    <link href="{% static 'assets/pages/sweetalert2.css' %}" rel="stylesheet" type="text/css">
+
 </head>
 
 <body>
@@ -201,8 +203,13 @@
                         </li>
 
                         <li>
-                            <a href="{% url 'users' %}" class="waves-effect"><i class="icon-mail-open"></i><span>
-                                    Merchants </span></a>
+                            <a href="{% url 'staff.users' %}" class="waves-effect"><i class="icon-mail-open"></i><span>
+                                    Staffs Managements </span></a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'vendor.index' %}" class="waves-effect"><i class="icon-mail-open"></i><span>
+                                    Vendors Managements </span></a>
                         </li>
 
                         <li>
@@ -399,6 +406,11 @@
     <script src="../plugins/raphael/raphael.min.js"></script> -->
 
     <script src="{% static 'assets/pages/dashboard.init.js' %}"></script>
+
+    <!-- Sweet-Alert  -->
+    <script src="{% static 'assets/pages/sweetalert2.min.js' %}"></script>
+    <script src="{% static 'assets/pages/sweet-alert.init.js' %}"></script>
+
 
     <!-- App js -->
     <script src="{% static 'assets/js/app.js' %}"></script>
