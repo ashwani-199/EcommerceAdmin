@@ -12,7 +12,7 @@ PLURAL_NAME = "Staffs"
 
 @login_required(login_url='login')
 def index(request):
-    DB = User.objects.filter(user_role_id=2).order_by('-id')
+    DB = User.objects.filter(user_role_id=2, is_active=True).order_by('-id')
     totalRecord = DB.count()
     paginator = Paginator(DB, 2)  
     page_number = request.GET.get('page')
@@ -43,8 +43,8 @@ def add(request):
             users.confirm_password = make_password(form.cleaned_data["confirm_password"])
             users.is_staff = True
             users.save()
-
-            return redirect("users")
+            messages.success(request, 'Form submission successful')
+            return redirect("staff.users")
 
     else:
         form = UserAddForm()
@@ -72,7 +72,7 @@ def edit(request, id):
         form = UserForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            messages.success(request, "you are now logged in")
+            messages.success(request, 'Form edit successfully')
             return redirect('staff.users')
 
     context = {
@@ -87,12 +87,11 @@ def edit(request, id):
 @login_required(login_url='login')
 def delete(request, id):
     user = User.objects.get(id=id)
+    print(user.id)
     if not user:
-        return redirect('index')
+        return redirect('staff.users')
     user.is_delete = True
     user.is_active = False
-    user.email = user.email + '_deleted_' + str(id)
-    user.username = user.username + '_deleted_' + str(id)
-    user.delete()
-    # user.save()
-    return redirect('users')
+    messages.success(request, 'data deleted successful')
+    user.save()
+    return redirect('staff.users')
