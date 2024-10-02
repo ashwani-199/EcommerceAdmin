@@ -11,7 +11,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-right">
                         <li class="breadcrumb-item"><a href="javascript:void(0);">Stexo</a></li>
-                        <li class="breadcrumb-item"><a href="#">{{plural_name}}</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'product.index' %}">{{plural_name}}</a></li>
                         <li class="breadcrumb-item active">All {{plural_name}}</li>
                     </ol>
                 </div>
@@ -22,18 +22,25 @@
             <div class="col-xl-12">
                 <div class="card m-b-30">
                     <div class="card-body">
-                        <a href="{% url 'add' %}">
+                        <a href="{% url 'product.add' %}">
                             <h4 class="btn btn-primary mt-0 header-title mb-4">Add {{singular_name}}</h4>
                         </a>
+                        <div class="text-right">
+                            <a href="{% url 'product.add_category' %}">
+                                <h4 class="btn btn-primary mt-0 header-title mb-4">Add Category</h4>
+                            </a>
+                        </div>
+
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
+                                        <th scope="col">Username</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Description</th>
                                         <th scope="col">Price</th>
-                                        <th scope="col">Quantity</th>
-                                        <th scope="col">Vendor</th>
+                                        <th scope="col">Stock</th>
+                                        <th scope="col">Image</th>
                                         <th scope="col">Category</th>
                                         <th scope="col">Date</th>
                                         <th scope="col">Action</th>
@@ -41,32 +48,37 @@
                                 </thead>
                                 <tbody>
                                     {% if page_obj %}
-                                    {% for user in page_obj %}
+                                    {% for product in page_obj %}
                                     <tr>
-                                        <td>{{user.username}}</td>
-                                        <td>{{user.first_name}} {{user.last_name}}</td>
-                                        <td>{{user.email}}</td>
-                                        <td><span class="badge badge-success">{{user.is_active}}</span></td>
+                                        <td>{{product.user}}</td>
+                                        <td>{{product.name}}</td>
+                                        <td>{{product.description}}</td>
+                                        <td>{{product.price}}</td>
+                                        <td><span class="badge badge-success">{{product.stock}}</span></td>
                                         <td>
+                                            {% for data in product_image %}
                                             <div>
-                                                <!-- <img src="assets/images/users/user-2.jpg" alt=""
-                                            class="thumb-md rounded-circle mr-2"> -->
-                                                {{user.mobile_number}}
+                                                <img src="{{data.image.url}}" alt="Image"
+                                                    class="thumb-md rounded-circle mr-2">
+
                                             </div>
+                                            {% endfor %}
                                         </td>
-                                        <td>Houston, TX 77074</td>
+                                        <td>{{product.categories}}</td>
                                         <td>{{user.created_at}}</td>
 
                                         <td>
                                             <div>
-                                                <a href="{% url 'edit' user.id %}" class="btn btn-primary btn-sm">Edit
+                                                <a href="{% url 'edit' product.id %}"
+                                                    class="btn btn-primary btn-sm">Edit
                                                 </a>
                                             </div>
-                                            <button>
-                                                <a href="{% url 'delete' user.id %}"
+                                            <br>
+                                            <div>
+                                                <a href="{% url 'delete' product.id %}"
                                                     class="btn btn-danger btn-sm">Delete
                                                 </a>
-                                            </button>
+                                            </div>
                                         </td>
                                     </tr>
                                     {% endfor %}

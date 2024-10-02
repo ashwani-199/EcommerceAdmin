@@ -1,14 +1,22 @@
 from django.db import models
-from clients.models import ClientProfile
 from product.models import Product
-# Create your models here.
+from apps.users.models import User
+from apps.shipping_cart.models import Cart
 
+STATUS =(
+        ('Pending','Pending'),
+        ('Order Confirmed','Order Confirmed'),
+        ('Out for Delivery','Out for Delivery'),
+        ('Delivered','Delivered'),
+    )
 
 class Order(models.Model):
-    id = models.BigAutoField(auto_created=True, primary_key=True)
-    client = models.ForeignKey(ClientProfile, on_delete=models.CASCADE)
+    order_date = models.DateTimeField(auto_now_add=True)
     total_amount = models.DecimalField(max_digits=100, decimal_places=3)
-    status = models.CharField(max_length=255)
+    status = models.CharField(max_length=50,null=True,choices=STATUS)
+    customer = models.ForeignKey(User, on_delete=models.CASCADE)
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    shipping_date = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -16,31 +24,23 @@ class Order(models.Model):
         return f"Total amount#{self.total_amount} for order #{self.id}"
 
 class OrderItem(models.Model):
-    id = models.BigAutoField(auto_created=True, primary_key=True)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.DecimalField(max_digits=100, decimal_places=3)
+    quantity = models.IntegerField()
     price = models.DecimalField(max_digits=100, decimal_places=3)
     total_price = models.DecimalField(max_digits=100, decimal_places=3)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"Total amount#{self.total_price} for order #{self.id}"
 
 class OrderHistory(models.Model):
-    id = models.BigAutoField(auto_created=True, primary_key=True)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    status = models.CharField(max_length=100)
-    changed_at = models.CharField(max_length=100)
+    status = models.CharField(max_length=50,null=True,choices=STATUS)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.status
     
-
-class OrderStatus(models.Model):
-    id = models.BigAutoField(auto_created=True, primary_key=True)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    status = models.CharField(max_length=500)
-    timestamp = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.status

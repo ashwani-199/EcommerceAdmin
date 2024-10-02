@@ -88,23 +88,23 @@ AUTH_USER_MODEL = 'users.User'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': env("DATABASE_ENGINE", default=""),
-        'NAME': env("DATABASE_NAME", default=""),
-        'USER': env("DATABASE_USER", default=""),
-        'PASSWORD': env("DATABASE_PASSWORD", default=""),
-        'HOST': env("DATABASE_HOST", default=""),
-        'PORT': env("DATABASE_PORT", default="")
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': env("DATABASE_ENGINE", default=""),
+#         'NAME': env("DATABASE_NAME", default=""),
+#         'USER': env("DATABASE_USER", default=""),
+#         'PASSWORD': env("DATABASE_PASSWORD", default=""),
+#         'HOST': env("DATABASE_HOST", default=""),
+#         'PORT': env("DATABASE_PORT", default="")
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
