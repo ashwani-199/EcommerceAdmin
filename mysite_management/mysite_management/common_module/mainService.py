@@ -9,6 +9,7 @@ PROTOCOL = 'http://'
 RESET_PASSWORD_URL = '/reset-password/'
 
 
+
 class MainService:
     def __init__(self, request):
         self.request = request

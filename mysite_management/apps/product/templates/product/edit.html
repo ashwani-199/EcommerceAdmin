@@ -11,7 +11,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-right">
                         <li class="breadcrumb-item"><a href="javascript:void(0);">Stexo</a></li>
-                        <li class="breadcrumb-item"><a href="{% url 'vendor.index' %}">{{singular_name}}</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'product.index' %}">{{plural_name}}</a></li>
                         <li class="breadcrumb-item active">Add {{singular_name}}</li>
                     </ol>
                 </div>
@@ -23,10 +23,11 @@
             <div class="col-lg-10">
                 <div class="card m-b-30">
                     <div class="card-body">
-                        <form action="{% url 'vendor.add' %}" method="post">
+                        <form action="{% url 'product.edit' product_data.id %}" method="post"
+                            enctype="multipart/form-data">
                             {% csrf_token %}
                             {% for field in form %}
-                            {% if field.name == 'username' %}
+                            {% if field.name == 'categories' %}
                             <div class="form-group">
                                 <div class="col-12">
                                     <label>{{field.label}}</label>
@@ -36,7 +37,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {% elif field.name == 'first_name' %}
+                            {% elif field.name == 'name' %}
                             <div class="form-group">
                                 <div class="col-12">
                                     <label>{{field.label}}</label>
@@ -46,7 +47,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {% elif field.name == 'last_name' %}
+                            {% elif field.name == 'description' %}
                             <div class="form-group">
                                 <div class="col-12">
                                     <label>{{field.label}}</label>
@@ -56,7 +57,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {% elif field.name == 'email' %}
+                            {% elif field.name == 'price' %}
                             <div class="form-group">
                                 <div class="col-12">
                                     <label>{{field.label}}</label>
@@ -66,7 +67,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {% elif field.name == 'password' %}
+                            {% elif field.name == 'brand_name' %}
                             <div class="form-group">
                                 <div class="col-12">
                                     <label>{{field.label}}</label>
@@ -76,17 +77,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {% elif field.name == 'confirm_password' %}
-                            <div class="form-group">
-                                <div class="col-12">
-                                    <label>{{field.label}}</label>
-                                    {{field}}
-                                    <div class="invalid-feedback">
-                                        {{field.errors}}
-                                    </div>
-                                </div>
-                            </div>
-                            {% elif field.name == 'mobile_number' %}
+                            {% elif field.name == 'stock' %}
                             <div class="form-group">
                                 <div class="col-12">
                                     <label>{{field.label}}</label>
@@ -97,6 +88,16 @@
                                 </div>
                             </div>
                             {% endif %}
+                            {% endfor %}
+
+                            {% for img in product_image %}
+                            <div class="form-group">
+                                <div class="col-12">
+                                    <label>Image</label>
+                                    <img src="{{img.image.url}}" width="200" height="200" style="max-width: 100%;"
+                                        alt="Italian Trulli">
+                                </div>
+                            </div>
                             {% endfor %}
 
                             <div class="form-group">
@@ -110,7 +111,6 @@
                                 </div>
                             </div>
                         </form>
-
                     </div>
                 </div>
             </div> <!-- end col -->

@@ -9,11 +9,8 @@ from django.shortcuts import redirect, render
 from .form import LoginForm, UserForm, ProfileEditForm, ForgotPasswordForm, PasswordRestForm
 from apps.users.models import User
 from mysite_management.common_module.mainService import MainService
-
-from datetime import datetime
+from mysite_management.common_module.validationMessage import Messages
 from django.core.mail import send_mail
-from django.template.loader import render_to_string
-from django.utils.html import strip_tags
 from django.conf import settings
 
 
@@ -35,10 +32,10 @@ def user_login(request):
             if user is not None:
                 login(request, user)
 
-                messages.success(request, "you are now logged in")
+                messages.success(request, Messages.YOU_ARE_NOW_LOGGED_IN.value)
                 return redirect('dashboard/')
             else:
-                messages.error(request, "invalid username and password")
+                messages.error(request, Messages.INVALID_CREDENTIALS.value)
                 return redirect("login")
 
     else:

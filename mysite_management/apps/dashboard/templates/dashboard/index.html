@@ -69,7 +69,7 @@
                             <i class="mdi mdi-tag-text-outline bg-warning text-white"></i>
                         </div>
                         <div>
-                            <h5 class="font-16">Vendors</h5>
+                            <h5 class="font-16">Products</h5>
                         </div>
                         {% if vendors > 0 %}
                         <h3 class="mt-4">{{vendors}}</h3>
@@ -118,8 +118,9 @@
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Username</th>
+
                                         <th scope="col">User RoleID</th>
+                                        <th scope="col">Username</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">Status</th>
@@ -134,8 +135,8 @@
                                     {% if page_obj %}
                                     {% for user in page_obj %}
                                     <tr>
-                                        <td>{{user.username}}</td>
                                         <td>{{user.user_role_id}}</td>
+                                        <td>{{user.username}}</td>
                                         <td>{{user.first_name}} {{user.last_name}}</td>
                                         <td>{{user.email}}</td>
                                         <td><span class="badge badge-success">{{user.is_active}}</span></td>

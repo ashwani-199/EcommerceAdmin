@@ -49,6 +49,7 @@
                                 <tbody>
                                     {% if page_obj %}
                                     {% for product in page_obj %}
+                                    {% for data in product_image %}
                                     <tr>
                                         <td>{{product.user}}</td>
                                         <td>{{product.name}}</td>
@@ -56,31 +57,33 @@
                                         <td>{{product.price}}</td>
                                         <td><span class="badge badge-success">{{product.stock}}</span></td>
                                         <td>
-                                            {% for data in product_image %}
+
+                                            {% if data.product.name == product.name %}
                                             <div>
                                                 <img src="{{data.image.url}}" alt="Image"
-                                                    class="thumb-md rounded-circle mr-2">
+                                                    class="thumb-md rounded-circle mr-2" id="my-image">
 
                                             </div>
-                                            {% endfor %}
+                                            {% endif %}
                                         </td>
                                         <td>{{product.categories}}</td>
-                                        <td>{{user.created_at}}</td>
+                                        <td>{{product.created_at}}</td>
 
                                         <td>
                                             <div>
-                                                <a href="{% url 'edit' product.id %}"
+                                                <a href="{% url 'product.edit' product.id %}"
                                                     class="btn btn-primary btn-sm">Edit
                                                 </a>
                                             </div>
                                             <br>
                                             <div>
-                                                <a href="{% url 'delete' product.id %}"
-                                                    class="btn btn-danger btn-sm">Delete
+                                                <a href="{% url 'product.delete' product.id %}"
+                                                    class="btn btn-danger btn-sm confirmDelete">Delete
                                                 </a>
                                             </div>
                                         </td>
                                     </tr>
+                                    {% endfor %}
                                     {% endfor %}
                                     {% else %}
                                     <tr>
@@ -98,5 +101,27 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $(".confirmDelete").click(function (e) {
+            e.stopImmediatePropagation();
+            url = $(this).attr('href');
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Want to delete this ?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it",
+                cancelButtonText: "No, cancel",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    window.location.replace(url);
+                }
+            });
+            e.preventDefault();
+        });
+    });
 
+</script>
 {% endblock content %}

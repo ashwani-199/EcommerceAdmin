@@ -5,6 +5,7 @@ from django.core.paginator import Paginator
 from apps.users.models import User
 from .forms import UserAddForm, UserForm
 from django.contrib import messages
+from mysite_management.common_module.validationMessage import Messages
 
 
 SINGULAR_NAME = "Staff"
@@ -43,7 +44,7 @@ def add(request):
             users.confirm_password = make_password(form.cleaned_data["confirm_password"])
             users.is_staff = True
             users.save()
-            messages.success(request, 'Form submission successful')
+            messages.success(request, Messages.USER_IS_REGISTER.value)
             return redirect("staff.users")
 
     else:
@@ -72,7 +73,7 @@ def edit(request, id):
         form = UserForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Form edit successfully')
+            messages.success(request, Messages.USER_IS_UPDATED_SUCCESSFULLY.value)
             return redirect('staff.users')
 
     context = {
@@ -92,6 +93,6 @@ def delete(request, id):
         return redirect('staff.users')
     user.is_delete = True
     user.is_active = False
-    messages.success(request, 'data deleted successful')
+    messages.success(request, Messages.USER_IS_DELETED_SUCCESSFULLY.value)
     user.save()
     return redirect('staff.users')

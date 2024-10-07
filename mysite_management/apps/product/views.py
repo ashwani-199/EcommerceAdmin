@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from apps.product.models import Product, ProductCategory, ProductImage
@@ -13,7 +12,8 @@ PLURAL_NAME = "Products"
 @login_required(login_url='login')
 def index(request):
     DB = Product.objects.filter().order_by('-id')
-    product_image = ProductImage.objects.all()
+    for data in DB:
+        product_image = ProductImage.objects.filter(id=data.id)
     
     totalRecord = DB.count()
     paginator = Paginator(DB, 2)  
@@ -67,6 +67,7 @@ def addProduct(request):
 @login_required(login_url='login')
 def edit(request, id):
     product = Product.objects.get(id=id)
+    product_image = ProductImage.objects.filter(product=product)
     if not product:
         return redirect('product.index')
     initialDict = {
@@ -86,23 +87,21 @@ def edit(request, id):
 
     context = {
         'form': form,
-        'product': product,
+        'product_data': product,
+        'product_image':product_image,
+        'singular_name': SINGULAR_NAME,
+        'plural_name': PLURAL_NAME,
     }
     return render(request, 'product/edit.html', context)
 
 
 @login_required(login_url='login')
 def delete(request, id):
-    user = Product.objects.get(id=id)
-    if not user:
-        return redirect('index')
-    user.is_delete = True
-    user.is_active = False
-    user.email = user.email + '_deleted_' + str(id)
-    user.username = user.username + '_deleted_' + str(id)
-    user.delete()
-    # user.save()
-    return redirect('users')
+    product = Product.objects.get(id=id)
+    if not product:
+        return redirect('product.index')
+    product.delete()
+    return redirect('product.index')
 
 
 

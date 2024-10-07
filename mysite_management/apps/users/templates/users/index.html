@@ -68,8 +68,7 @@
                                             <br>
                                             <div>
                                                 <a href="{% url 'staff.delete' user.id %}"
-                                                    class="btn btn-danger waves-effect waves-light"
-                                                    id="sa-warning">Delete
+                                                    class="btn btn-danger confirmDelete" id="sa-warning">Delete
                                                 </a>
                                             </div>
                                         </td>
@@ -91,5 +90,27 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $(".confirmDelete").click(function (e) {
+            e.stopImmediatePropagation();
+            url = $(this).attr('href');
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Want to delete this ?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it",
+                cancelButtonText: "No, cancel",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    window.location.replace(url);
+                }
+            });
+            e.preventDefault();
+        });
+    });
 
+</script>
 {% endblock content %}
